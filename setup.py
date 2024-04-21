@@ -221,7 +221,7 @@ def main():
             )  # see: https://github.com/skvark/opencv-python/issues/263
 
     if sys.platform.startswith("linux") and not is64 and "bdist_wheel" in sys.argv:
-        subprocess.check_call("patch -p0 < patches/patchOpenEXR", shell=True)
+        subprocess.check_call("patch -p0 < patches/patchOpenEXR", shell=False)
 
     # OS-specific components during CI builds
     if is_CI_build:
@@ -232,7 +232,7 @@ def main():
             and sys.platform.startswith("linux")
         ):
             cmake_args.append("-DWITH_QT=5")
-            subprocess.check_call("patch -p1 < patches/patchQtPlugins", shell=True)
+            subprocess.check_call("patch -p1 < patches/patchQtPlugins", shell=False)
 
             if sys.platform.startswith("linux"):
                 rearrange_cmake_output_data["cv2.qt.plugins.platforms"] = [
